@@ -12,11 +12,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/computers/protos/DesktopComputer.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/computers/protos/ComputerMouse.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/tools/protos/Wrench.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/tools/protos/PlatformCart.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Radiator.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/pallet/protos/WoodenPalletStack.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/cabinet/protos/Cabinet.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/GlossyPaint.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/CardboardBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Wall.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Roughcast.proto"
@@ -51,8 +48,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.14478918431006085 0.9297442592274957 0.33854350464946503 0.8622973555668654
-  position -0.9294933838143556 -0.5459525121627484 2.7846440095059704
+  orientation 0.055173632976382045 0.9603340395385874 -0.27333935451684716 0.4142929380958043
+  position -8.431750650529857 0.7534081657414715 4.357991711526171
   exposure 1.7
 }
 TexturedBackground {
@@ -105,38 +102,9 @@ ComputerMouse {
   rotation 0 0 -1 -1.5707953071795862
   mass 0
 }
-Table {
-  translation -4.09991 -0.81333 0
-  rotation 0 0 1 -1.5707963071795863
-  name "table(1)"
-  size 1.8 0.7 0.8
-  feetSize 0.05 0.05
-  trayAppearance PBRAppearance {
-    baseColor 0.926 0.912 0.698
-    roughness 0.8
-    metalness 0
-  }
-  legAppearance BrushedAluminium {
-    colorOverride 0.333 0.341 0.325
-  }
-}
 Wrench {
-  translation -1.2388599919906513 -0.5885998479535617 -0.001029652765278847
-  rotation -6.759079312141433e-06 -7.486399875015119e-05 0.9999999971748482 -2.6179954112880788
-}
-PlatformCart {
-  hidden position_0_0 2.2662220553599222e-10
-  hidden position2_0_0 -1.1644748972466152e-12
-  hidden position_0_1 2.2664896220438945e-10
-  hidden position2_0_1 -3.078623575611015e-13
-  hidden position_0_2 -6.355804771374096e-12
-  hidden position_0_3 -6.249223361010081e-12
-  hidden rotation_2 1 6.751978666082958e-10 6.845328864720265e-10 1.5708
-  hidden rotation_3 1 6.786874665261345e-10 6.812038137465324e-10 1.5708
-  hidden rotation_4 1 -5.402414211456086e-11 5.4024340556679876e-11 1.5708
-  hidden rotation_5 1 -5.311820345417138e-11 5.311839856858575e-11 1.5708
-  translation 0.927644845319204 1.793305713852876 -0.0007518916359243177
-  rotation 0.0001646680066044761 2.1941695220012844e-05 0.9999999862015047 -2.879793295142136
+  translation -1.2388599919906513 -0.5885998479535617 -0.0010296527652788475
+  rotation -6.759079312169868e-06 -7.48639987500536e-05 0.9999999971748482 -2.6179954112880783
 }
 Radiator {
   translation 0.528902 2.341308 0.33
@@ -149,32 +117,30 @@ WoodenPalletStack {
   palletNumber 5
   palletSize 0.8 1 0.11
 }
-Cabinet {
-  hidden position_6_0 1.6015341629859536e-06
-  hidden translation_7 -3.1870529843406856e-07 -2.5521251778570786e-13 0
-  hidden rotation_7 0 0 1 1.601580243414016e-06
-  hidden position_10_0 -1.3615450153992015e-06
-  hidden translation_11 -2.3030533935470406e-07 1.5648593532091581e-13 0
-  hidden rotation_11 0 0 -1 1.361480209887104e-06
-  translation -0.41 2.47 0
-  rotation 0 0 1 -1.5707953071795862
-  name "cabinet(1)"
-  layout [
-    "RightSidedDoor (1, 1, 1, 5, 1.5)"
-    "LeftSidedDoor (2, 1, 2, 5, 1.5)"
+Solid {
+  translation -0.64 2.08 0.48
+  rotation 0 0 1 3.14159
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.411765 0.207843 0
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../../../../OneDrive/Documentos/Untitled.stl"
+        ]
+      }
+    }
   ]
-  primaryAppearance GlossyPaint {
-    baseColor 0.729 0.741 0.713
-  }
-  secondaryAppearance GlossyPaint {
-    baseColor 0.729 0.741 0.713
-  }
+  name "shelving"
 }
 CardboardBox {
-  translation -1.21 2.18 0.3
+  translation -1.78 2.18 0.3
 }
 CardboardBox {
-  translation -1.198389 2.100678 0.75
+  translation -1.74175 2.12182 0.75
   rotation 0 0 1 2.094395
   name "cardboard box(1)"
   size 0.4 0.6 0.3
@@ -323,42 +289,11 @@ SolidBox {
   }
 }
 FireExtinguisher {
-  translation -0.7577098605015532 1.7899999799347552 -0.0011771997345778051
-  rotation 0.0005928634790114967 -0.0007924536780046914 -0.9999995102649117 1.5708004883835065
+  translation -2.41771 1.79 -0.00347962
+  rotation 0.0005935749180939515 -0.0007934036825223825 -0.999999509089586 1.570800489558814
 }
 UR3e {
-  hidden position_0_0 1.2121776755790832e-05
-  hidden rotation_1 0 0 1 1.2121780942599955e-05
-  hidden position_1_0 2.765054420261563e-05
-  hidden rotation_2 0 1 0 1.5708236505442026
-  hidden position_2_0 1.0306111484051443e-05
-  hidden rotation_3 0 0.9999999999999999 0 1.0306132593449073e-05
-  hidden position_3_0 2.725873807894675e-06
-  hidden rotation_4 0 1 0 1.5707987258738079
-  hidden position_4_0 -1.4185923733026525e-06
-  hidden rotation_5 0 0 -0.9999999999999999 1.4186656755700294e-06
-  hidden position_5_0 1.4140186585413613e-06
-  hidden rotation_6 0 0.9999999999999999 0 1.4139623837800866e-06
-  hidden position_8_0 1.8336465397764623e-07
-  hidden position_8_1 1.8336465813456662e-07
-  hidden position_8_2 0.049499947328838376
-  hidden rotation_9 0.7068252250603843 0.7073882252405282 3.0648043497833677e-06 3.141598129709971
-  hidden position_9_0 0.04950005267187947
-  hidden rotation_10 0 0 1 5.16191365590357e-08
-  hidden position_10_0 7.658557734796498e-09
-  hidden rotation_11 0 0 -1 0.5199999923414426
-  hidden position_11_0 -0.05230000000000888
-  hidden rotation_13 0.7068252250603843 0.7073882252405282 3.0648043512524735e-06 3.141598129709974
-  hidden position_13_0 0.04950005267187284
-  hidden rotation_14 0 0 1 4.2146848510894035e-08
-  hidden position_14_0 7.658556900506844e-09
-  hidden rotation_15 0 0 -1 0.5199999923414435
-  hidden position_15_0 -0.05230000000000888
-  hidden rotation_17 0 0 -0.9999999999999999 4.2146848510894035e-08
-  hidden position_17_0 -7.658447085003702e-09
-  hidden rotation_18 0 0 -1 0.5200000076584469
-  hidden position_18_0 -0.05229999999999155
-  translation 1.30296 0.079391 0.91
+  translation -1.29704 1.08939 0.91
   rotation 0 1 0 0
   controller "ure_controller_scara"
   controllerArgs [
@@ -380,37 +315,6 @@ UR3e {
   ]
 }
 UR5e {
-  hidden position_0_0 3.105257288120565e-05
-  hidden rotation_1 0 0 1 3.10525755403037e-05
-  hidden position_1_0 7.467040148572187e-05
-  hidden rotation_2 0 1 0 1.5708706704014854
-  hidden position_2_0 2.4390925323997735e-05
-  hidden rotation_3 0 1 0 2.4390920535224827e-05
-  hidden position_3_0 -4.1879428822610976e-06
-  hidden rotation_4 0 1 0 1.5707918120571178
-  hidden position_4_0 -1.6047838034400123e-06
-  hidden rotation_5 0 0 -1 1.6049041769309786e-06
-  hidden position_5_0 -1.6024611468878902e-06
-  hidden rotation_6 0 -1 0 1.6024118731940297e-06
-  hidden position_7_0 1.8336533581240862e-07
-  hidden position_7_1 1.8336533871663544e-07
-  hidden position_7_2 0.049499947332721464
-  hidden rotation_8 0.7068252250603843 0.7073882252405282 3.064804590752421e-06 3.141598129710453
-  hidden position_8_0 0.04950005266840438
-  hidden rotation_9 0 0 1 5.16191365590357e-08
-  hidden position_9_0 7.658064124407471e-09
-  hidden rotation_10 0 0 -1 0.5199999923419357
-  hidden position_10_0 -0.05230000000002125
-  hidden rotation_12 0.7068252250603843 0.7073882252405282 3.0648045917788117e-06 3.1415981297104554
-  hidden position_12_0 0.04950005266837562
-  hidden rotation_13 0 0 1 5.16191365590357e-08
-  hidden position_13_0 7.658060126399334e-09
-  hidden rotation_14 0 0 -1 0.51999999234194
-  hidden position_14_0 -0.052300000000021316
-  hidden rotation_16 0 0 -1 5.16191365590357e-08
-  hidden position_16_0 -7.657864564691863e-09
-  hidden rotation_17 0 0 -1 0.5200000076578648
-  hidden position_17_0 -0.05229999999997867
   translation 0 0 0.61
   rotation 5.67193e-08 2.39745e-09 -1 1.5708
   controller "ure_can_grasper"
@@ -425,37 +329,6 @@ UR5e {
   ]
 }
 UR10e {
-  hidden position_0_0 -5.940391390159786e-05
-  hidden rotation_1 0 0 -1 5.940391596758311e-05
-  hidden position_1_0 0.00014299499324941131
-  hidden rotation_2 0 1 0 1.5709389949932495
-  hidden position_2_0 3.860545708498036e-05
-  hidden rotation_3 0 1 0 3.860545494967622e-05
-  hidden position_3_0 5.22218579119864e-06
-  hidden rotation_4 0 1 0 1.570801222185791
-  hidden position_4_0 1.7258778430788436e-06
-  hidden rotation_5 0 0 1 1.7259636206115136e-06
-  hidden position_5_0 -1.6664716805451337e-06
-  hidden rotation_6 0 -1 0 1.666533503534343e-06
-  hidden position_8_0 1.8336557759429703e-07
-  hidden position_8_1 1.8336557338758633e-07
-  hidden position_8_2 0.049500052672139215
-  hidden rotation_9 0.7068252250603843 0.7073882252405282 3.064804676201207e-06 3.141598129710624
-  hidden position_9_0 0.049499947332721464
-  hidden rotation_10 0 0 -1 5.16191365590357e-08
-  hidden position_10_0 -7.65785109951043e-09
-  hidden rotation_11 0 0 -1 0.5200000076578509
-  hidden position_11_0 -0.05229999999996062
-  hidden rotation_13 0.7068252250603843 0.7073882252405282 3.064804674714502e-06 3.1415981297106215
-  hidden position_13_0 0.04949994733271791
-  hidden rotation_14 0 0 -1 4.2146848510894035e-08
-  hidden position_14_0 -7.657852130193987e-09
-  hidden rotation_15 0 0 -1 0.5200000076578518
-  hidden position_15_0 -0.05229999999996067
-  hidden rotation_17 0 0 1 5.16191365590357e-08
-  hidden position_17_0 7.658591457514832e-09
-  hidden rotation_18 0 0 -1 0.5199999923414088
-  hidden position_18_0 -0.052300000000002664
   translation -0.56 -0.1 0.61
   rotation 4.66309e-07 -7.19235e-09 1 -1.5707953071795862
   controller "ure_controller_scara"
@@ -480,8 +353,6 @@ UR10e {
   ]
 }
 ConveyorBelt {
-  hidden translation_1 1.7368328997235949e-12 -2.1826984664130578e-13 0.44993329199999266
-  hidden rotation_1 -0.12425767099812858 -0.992249984226818 -5.995788529356231e-10 0.0001262865403636795
   translation 3.18 -1.05 0
   rotation 0 0 1 3.141592
   size 8 0.7 0.6
@@ -494,7 +365,6 @@ ConveyorBelt {
   speed 0.2
 }
 ConveyorBelt {
-  hidden translation_1 0 0 0.11249607600000022
   translation 1.77 2.55 0.75
   rotation 0 0 1 -1.5707973071795864
   name "conveyor belt(2)"
@@ -507,60 +377,30 @@ ConveyorBelt {
   borderHeight 0
   speed 0.2
 }
-ConveyorBelt {
-  hidden translation_1 -1.0833677026174084e-05 1.5578852652353703e-09 0.18747868011041838
-  hidden rotation_1 0.0018211669649172081 0.9999978897290867 -0.0009507303820848328 9.357280479002198e-05
-  translation 0 0.69 0
-  rotation 0 1 0 0
-  name "conveyor belt(1)"
-  size 13 0.5 0.25
-  appearance CorrugatedMetal {
-    textureTransform TextureTransform {
-      scale 6 3.1
-    }
-  }
-  borderHeight 0
-  speed 0.062
-  acceleration 0.012
-  timer 90
-}
 PlasticCrate {
-  translation 6.200118137341211 0.6800005581254877 0.24876482033424716
-  rotation -0.0005759027334150133 0.9999922022089061 -0.003906898696420427 0.0002352932080915559
-  size 0.6 0.45 0.4
-  mass 1
-}
-PlasticCrate {
-  translation 5.600175498079732 0.6799992897533469 0.24888033356862466
-  rotation 0.0023291468465868317 0.9999785135532916 -0.006127602036408766 0.00016896806060420953
-  name "plastic crate(1)"
-  size 0.6 0.45 0.4
-  mass 1
-}
-PlasticCrate {
-  translation 5.0002119006030545 0.6799984263881957 0.24898195738497936
-  rotation 0.00349396761733387 0.9999744391259019 -0.00623805138863005 0.0001586919454038825
-  name "plastic crate(2)"
-  size 0.6 0.45 0.4
-  mass 1
-}
-PlasticCrate {
-  translation 4.400231080872438 0.6799986369240032 0.24908126446539033
-  rotation 0.001839626027418375 0.9999787025162911 -0.00626181203122812 0.00015132350080454974
+  translation 0.16024 0.609999 0.659902
+  rotation -5.24321657654704e-10 -2.821025104935401e-07 -0.9999999999999603 9.475527762538357e-07
   name "plastic crate(3)"
   size 0.6 0.45 0.4
+  color 0 0 0
   mass 1
 }
+Table {
+  translation -0.23 0.59 0.17
+  name "table(2)"
+  size 1.8 0.8 0.49
+}
 PlasticCrate {
-  translation -1.179069999999998 -1.0700000000000005 -9.80999999999621e-05
-  rotation -3.384634338184906e-12 -1.6807658519469725e-12 1 3.0165680662401777e-07
+  translation -0.69907 0.59 0.65995
+  rotation 3.536236937008735e-10 -0.9999990578616869 0.0013726892360565776 0.0002197558734662
   name "plastic crate(4)"
   size 0.6 0.45 0.4
+  color 1 1 1
   mass 1
 }
 Solid {
-  translation 5.44682451205283 -1.3099945127433459 0.6990941233283179
-  rotation 0.016300636307903536 0.9998671357069104 1.3755597489775734e-05 -3.141339570324644
+  translation 4.584849430994733 -1.309996217415827 0.699385465871072
+  rotation 0.01630079681751189 0.999867133083985 1.4196014392259361e-05 -3.141393595746607
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -578,8 +418,8 @@ Solid {
   }
 }
 Solid {
-  translation 5.137034521576889 -1.29975451656731 0.6991720838972394
-  rotation 0.016300636393604215 0.9998671357055132 1.3755597479024277e-05 -3.141339570324641
+  translation 4.275061505308249 -1.2997562224076589 0.6994468174069707
+  rotation 0.016300785317341488 0.9998671332714717 1.4196015536505809e-05 -3.141393595746973
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -598,8 +438,8 @@ Solid {
   }
 }
 Solid {
-  translation 6.126914490818512 -1.3122245043314198 0.6989236100194585
-  rotation 0.016300636121467354 0.9998671357099497 1.375559751344807e-05 -3.1413395703246487
+  translation 5.264934935303796 -1.3122262028858542 0.6992514147926028
+  rotation 0.016300870088829886 0.999867131889443 1.4196007099974796e-05 -3.14139359574444
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -618,8 +458,8 @@ Solid {
   }
 }
 Solid {
-  translation 6.3581270295181795 -1.3202986556792458 0.6988654104100875
-  rotation 0.016303625068326808 0.9998670869772769 1.3755219236945648e-05 -3.141339570242409
+  translation 5.496145931323782 -1.3203003530191129 0.699205611377097
+  rotation 0.016303865614794237 0.9998670830487905 1.4195708919300215e-05 -3.141393595659351
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -638,8 +478,8 @@ Solid {
   }
 }
 Solid {
-  translation 4.537374540512622 -1.280214524025775 0.6993229832073838
-  rotation 0.016300636559127953 0.9998671357028147 1.3755597458120976e-05 -3.1413395703246367
+  translation 3.675405519944572 -1.28021623210869 0.6995655666390791
+  rotation 0.01630076316437218 0.9998671336326304 1.4196017740411578e-05 -3.141393595747678
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -658,8 +498,8 @@ Solid {
   }
 }
 Solid {
-  translation 4.206884551013866 -1.2895145281240634 0.6994055183277144
-  rotation 0.016300636648288288 0.999867135701361 1.3755597446710136e-05 -3.141339570324634
+  translation 3.3449176567396135 -1.289516237432129 0.6996303829328774
+  rotation 0.01630075101131764 0.9998671338307606 1.4196018949569044e-05 -3.1413935957480654
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -678,8 +518,8 @@ Solid {
   }
 }
 Solid {
-  translation 3.8068445632651704 -1.2864045330467446 0.6995058734679418
-  rotation 0.01630063675754874 0.9998671356995799 1.37555974329522e-05 -3.1413395703246314
+  translation 2.9448802970121655 -1.286406243828587 0.6997092903971187
+  rotation 0.01630073636197807 0.9998671340695874 1.4196020406900624e-05 -3.1413935957485326
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -698,8 +538,8 @@ Solid {
   }
 }
 Solid {
-  translation 5.787244501395223 -1.3011545085392522 0.6990090851265744
-  rotation 0.016300636215589106 0.9998671357084152 1.3755597501646521e-05 -3.141339570324646
+  translation 4.925267209540136 -1.3011562088467687 0.6993186788850421
+  rotation 0.016300860555743632 0.9998671320448611 1.4196008048270639e-05 -3.141393595744754
   children [
     DEF box Shape {
       appearance PBRAppearance {
