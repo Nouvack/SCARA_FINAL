@@ -48,8 +48,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.055173632976382045 0.9603340395385874 -0.27333935451684716 0.4142929380958043
-  position -8.431750650529857 0.7534081657414715 4.357991711526171
+  orientation 0.0682099949333768 0.31128189080616664 0.9478665417912621 0.5333761843795195
+  position -4.74838491117636 -0.32633715682039877 1.53891513785853
   exposure 1.7
 }
 TexturedBackground {
@@ -129,7 +129,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../../../../OneDrive/Documentos/Untitled.stl"
+          "../../models/Untitled.stl"
         ]
       }
     }
@@ -293,7 +293,7 @@ FireExtinguisher {
   rotation 0.0005935749180939515 -0.0007934036825223825 -0.999999509089586 1.570800489558814
 }
 UR3e {
-  translation -1.29704 1.08939 0.91
+  translation -1.29704 1.15938 0.54
   rotation 0 1 0 0
   controller "ure_controller_scara"
   controllerArgs [
@@ -356,19 +356,6 @@ ConveyorBelt {
   translation 3.18 -1.05 0
   rotation 0 0 1 3.141592
   size 8 0.7 0.6
-  appearance CorrugatedMetal {
-    textureTransform TextureTransform {
-      scale 6 3.1
-    }
-  }
-  borderHeight 0
-  speed 0.2
-}
-ConveyorBelt {
-  translation 1.77 2.55 0.75
-  rotation 0 0 1 -1.5707973071795864
-  name "conveyor belt(2)"
-  size 10 0.15 0.15
   appearance CorrugatedMetal {
     textureTransform TextureTransform {
       scale 6 3.1
@@ -554,6 +541,112 @@ Solid {
   ]
   name "solid(7)"
   boundingObject USE box
+  physics Physics {
+  }
+}
+Robot {
+  translation -1.29704 1.16 0.29
+  children [
+    Group {
+      children [
+        HingeJoint {
+          jointParameters HingeJointParameters {
+            anchor -0.100452 -0.0261768 -0.24
+          }
+          device [
+            RotationalMotor {
+              name "wheel1"
+            }
+          ]
+          endPoint DEF WHEEL_1 Solid {
+            translation -0.100452 -0.0261768 -0.24
+            rotation -0.4959449732817092 -0.6140189669206501 -0.6140189669206501 -2.2207953071795865
+            children [
+              DEF WHEEL Shape {
+                appearance PBRAppearance {
+                  baseColor 0 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.05
+                }
+              }
+            ]
+          }
+        }
+        BallJoint {
+          jointParameters BallJointParameters {
+            anchor 0 0.06 -0.26
+          }
+          jointParameters2 JointParameters {
+          }
+          jointParameters3 JointParameters {
+            axis 0 1 0
+          }
+          endPoint Solid {
+            translation 0 0.06 -0.27
+            children [
+              DEF CASTER Shape {
+                appearance PBRAppearance {
+                  baseColor 0 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Sphere {
+                  radius 0.02
+                }
+              }
+            ]
+            name "solid(2)"
+            boundingObject USE CASTER
+            physics Physics {
+            }
+          }
+        }
+        HingeJoint {
+          jointParameters HingeJointParameters {
+            anchor 0.100452 0.0261768 -0.24
+          }
+          device [
+            RotationalMotor {
+              name "wheel2"
+            }
+          ]
+          endPoint DEF WHEEL_2 Solid {
+            translation 0.100452 0.0261768 -0.24
+            rotation -0.4959449732817092 -0.6140189669206501 -0.6140189669206501 -2.2207953071795865
+            children [
+              DEF WHEEL Shape {
+                appearance PBRAppearance {
+                  baseColor 0 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.05
+                }
+              }
+            ]
+            name "solid(1)"
+          }
+        }
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.419608 0.419608 0.419608
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.5
+            radius 0.09
+          }
+        }
+      ]
+    }
+  ]
   physics Physics {
   }
 }
