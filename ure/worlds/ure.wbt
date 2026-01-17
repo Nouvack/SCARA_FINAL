@@ -49,7 +49,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.0682099949333768 0.31128189080616664 0.9478665417912621 0.5333761843795195
-  position -4.74838491117636 -0.32633715682039877 1.53891513785853
+  position -3.9686157805289897 0.11242427884791514 1.4038275900418395
   exposure 1.7
 }
 TexturedBackground {
@@ -129,7 +129,7 @@ Solid {
       }
       geometry Mesh {
         url [
-          "../../models/Untitled.stl"
+          "../models/Untitled.stl"
         ]
       }
     }
