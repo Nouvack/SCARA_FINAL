@@ -48,8 +48,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.0682099949333768 0.31128189080616664 0.9478665417912621 0.5333761843795195
-  position -3.9686157805289897 0.11242427884791514 1.4038275900418395
+  orientation -0.3905389244276834 0.37164207492103885 0.8422360219411498 1.9718703113384322
+  position 0.7268171264142033 -1.856078160142898 2.2309940394837047
   exposure 1.7
 }
 TexturedBackground {
@@ -317,9 +317,18 @@ UR3e {
 UR5e {
   translation 0 0 0.61
   rotation 5.67193e-08 2.39745e-09 -1 1.5708
-  controller "ure_can_grasper"
+  controller "ure_controller_scara"
   selfCollision FALSE
   toolSlot [
+    Camera {
+      translation 7.0424e-14 0.08 4.39663e-08
+      rotation -0.7071067811862364 -0.7071067811862364 9.381857096790023e-07 3.14159
+      name "color_sensor"
+      width 256
+      height 256
+      recognition Recognition {
+      }
+    }
     Robotiq3fGripper {
     }
     DistanceSensor {
