@@ -12,7 +12,13 @@ EPS = 1e-4
 
 counter = 0
 state = WAITING
-target_positions = [-1.88, -2.14, -2.38, -1.51]
+# Ángulos ajustados para UR5e (brazo más corto que UR10e)
+# Colocar las cajas BLANCAS en la canasta BLANCA (detrás)
+# shoulder_lift: rotación hacia atrás
+# elbow: mayor extensión para compensar brazo más corto
+# wrist_1: orientación de la muñeca
+# wrist_2: rotación final
+target_positions = [-1.2, -1.8, -1.3, 0.0]
 speed = 1.0
 
 # -----------------------
