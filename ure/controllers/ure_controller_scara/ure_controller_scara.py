@@ -7,18 +7,19 @@ WAITING, GRASPING, ROTATING, RELEASING, ROTATING_BACK = range(5)
 
 robot = Robot()
 
-# Margen pequeño para no pedir posiciones exactamente en el límite
-EPS = 1e-4
+# Margen para no pedir posiciones exactamente en el límite
+EPS = 0.001  # Aumentado para evitar warnings de Webots
 
 counter = 0
 state = WAITING
-# Ángulos ajustados para UR5e (brazo más corto que UR10e)
-# Colocar las cajas BLANCAS en la canasta BLANCA (detrás)
-# shoulder_lift: rotación hacia atrás
-# elbow: mayor extensión para compensar brazo más corto
-# wrist_1: orientación de la muñeca
-# wrist_2: rotación final
-target_positions = [-1.2, -1.8, -1.3, 0.0]
+detected_color = None  # 'white' o 'black'
+
+# Posiciones para cada canasta
+# Canasta BLANCA (izquierda/detrás)
+white_basket_positions = [-1.2, -1.8, -1.3, 0.0]
+# Canasta NEGRA (derecha) - ajustar wrist_2 para rotar hacia la otra canasta
+black_basket_positions = [-1.2, -1.8, -1.3, 1.57]
+
 speed = 1.0
 
 # -----------------------
@@ -62,7 +63,7 @@ if camera is None:
     raise RuntimeError('No se encontró la cámara "color_sensor".')
 camera.enable(TIME_STEP)
 
-print(f'[{robot.getName()}] Brazo BLANCO - Solo agarra BLANCAS (modo ROI por imagen)')
+print(f'[{robot.getName()}] Sistema de clasificación - Detecta BLANCAS y NEGRAS (modo ROI por imagen)')
 
 # Ignorar primeros frames 
 warmup_steps = 3
@@ -87,16 +88,21 @@ def open_gripper():
     for m in hand_motors:
         m.setPosition(m.getMinPosition() + EPS)
 
-def is_white_can():
+def detect_box_color():
     """
-    Clasifica blanca vs negra usando:
+    Clasifica caja como blanca, negra o ninguna usando:
       - buffer BGRA de Webots,
       - ROI central para reducir fondo,
-      - brillo (luma) + spread (canales parecidos -> blanco).
+      - brillo (luma) + spread (canales parecidos -> blanco/negro).
+    
+    Returns:
+        'white': caja blanca detectada
+        'black': caja negra detectada
+        None: no se detectó caja o color indeterminado
     """
     image = camera.getImage()
     if image is None:
-        return False
+        return None
 
     w, h = camera.getWidth(), camera.getHeight()
 
@@ -118,8 +124,13 @@ def is_white_can():
 
     print(f"[{robot.getName()}] ROI bright={brightness:.1f} spread={spread:.1f} (R={R.mean():.1f} G={G.mean():.1f} B={B.mean():.1f})")
 
-    # Umbrales iniciales 
-    return (brightness > 150.0) and (spread < 12.0)
+    # Clasificación por umbrales
+    if (brightness > 150.0) and (spread < 12.0):
+        return 'white'
+    elif (brightness < 80.0) and (spread < 15.0):
+        return 'black'
+    else:
+        return None
 
 
 # -----------------------
@@ -133,36 +144,52 @@ while robot.step(TIME_STEP) != -1:
     if counter <= 0:
         if state == WAITING:
             if distance_sensor.getValue() < 500:
-                if is_white_can():
+                color = detect_box_color()
+                if color == 'white':
+                    detected_color = 'white'
                     state = GRASPING
                     counter = 8
-                    print(f"[{robot.getName()}] BLANCA detectada - Grasping")
+                    print(f"[{robot.getName()}] BLANCA detectada - Grasping -> Canasta BLANCA")
+                    close_gripper()
+                elif color == 'black':
+                    detected_color = 'black'
+                    state = GRASPING
+                    counter = 8
+                    print(f"[{robot.getName()}] NEGRA detectada - Grasping -> Canasta NEGRA")
                     close_gripper()
                 else:
-                    print(f"[{robot.getName()}] NEGRA detectada - Dejo pasar")
+                    print(f"[{robot.getName()}] Color indeterminado - Dejo pasar")
 
         elif state == GRASPING:
+            # Seleccionar posiciones según el color detectado
+            if detected_color == 'white':
+                target_positions = white_basket_positions
+            else:  # black
+                target_positions = black_basket_positions
+            
             for i in range(4):
                 ur_motors[i].setPosition(target_positions[i])
-            print(f"[{robot.getName()}] Rotating arm")
+            print(f"[{robot.getName()}] Rotating arm to {detected_color} basket")
+            counter = 50  # Dar tiempo suficiente para que el brazo llegue a la canasta
             state = ROTATING
 
         elif state == ROTATING:
-            if position_sensor.getValue() < -2.3:
-                counter = 8
-                print(f"[{robot.getName()}] Releasing can")
-                state = RELEASING
-                open_gripper()
+            # Esperar a que termine el movimiento (counter llegue a 0)
+            print(f"[{robot.getName()}] Releasing can in {detected_color} basket")
+            state = RELEASING
+            open_gripper()
 
         elif state == RELEASING:
+            counter = 15  # Esperar a que suelte la caja
             for m in ur_motors:
                 m.setPosition(0.0)
             print(f"[{robot.getName()}] Rotating arm back")
             state = ROTATING_BACK
 
         elif state == ROTATING_BACK:
-            if position_sensor.getValue() > -0.1:
-                state = WAITING
-                print(f"[{robot.getName()}] Waiting can")
+            # Esperar a que termine el movimiento de regreso
+            state = WAITING
+            detected_color = None
+            print(f"[{robot.getName()}] Waiting can")
 
     counter -= 1
