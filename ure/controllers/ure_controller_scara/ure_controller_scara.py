@@ -16,7 +16,7 @@ detected_color = None  # 'white' o 'black'
 
 # Posiciones para cada canasta
 # Canasta BLANCA (izquierda/detrás)
-white_basket_positions = [-1.2, -1.8, -1.3, 0.0]
+white_basket_positions = [-1.2, -1.8, -1.3, -1.57]
 # Canasta NEGRA (derecha) - ajustar wrist_2 para rotar hacia la otra canasta
 black_basket_positions = [-1.2, -1.8, -1.3, 1.57]
 
