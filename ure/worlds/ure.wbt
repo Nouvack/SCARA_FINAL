@@ -46,8 +46,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.6093154233114045 0.526900190546574 -0.5925461198226074 2.065777833408701
-  position 6.119610961139796 -0.4628950106104412 6.515395299566151
+  orientation 0.07423014221635588 0.2801021127056099 0.9570959682520834 0.536793513141776
+  position -5.338603622943423 -0.8905389714658812 1.1816020493151635
   exposure 1.7
 }
 TexturedBackground {
@@ -227,28 +227,6 @@ SolidBox {
     }
   }
 }
-UR3e {
-  translation -1.29704 1.15938 0.54
-  rotation 0 1 0 0
-  controller "ure_controller_scara"
-  controllerArgs [
-    "3"
-  ]
-  selfCollision FALSE
-  toolSlot [
-    Camera {
-      name "color_sensor"
-      recognition Recognition {
-      }
-    }
-    Robotiq3fGripper {
-    }
-    DistanceSensor {
-      translation 0 0.1 0
-      rotation 0 0 1 1.570796
-    }
-  ]
-}
 UR5e {
   translation 0 -0.05 0.61
   rotation 0 0 1 -1.570795613280012
@@ -285,7 +263,7 @@ ConveyorBelt {
   speed 0.2
 }
 PlasticCrate {
-  translation 0.5302429699807196 0.6100070000001138 0.6599019000000003
+  translation 0.530243 0.610007 0.369902
   rotation -3.1436620587487393e-13 1.71397643347325e-13 -1 3.40800382813052e-06
   name "plastic crate(3)"
   size 0.6 0.45 0.4
@@ -293,12 +271,12 @@ PlasticCrate {
   mass 1
 }
 Table {
-  translation 0.07 0.59 0.17
+  translation 0.04 0.57 0.03
   name "table(2)"
-  size 1.8 0.8 0.49
+  size 1.8 0.8 0.34
 }
 PlasticCrate {
-  translation -0.23636100124495596 0.6248120000307724 0.6599019000000003
+  translation -0.236361 0.624812 0.369902
   rotation 5.824639148588208e-18 3.252428997912642e-17 -0.9999999999999999 0.024695211275510328
   name "plastic crate(4)"
   size 0.6 0.45 0.4
@@ -465,8 +443,8 @@ Solid {
   }
 }
 Robot {
-  translation -1.29704 1.1787970330563962 0.2534865790959013
-  rotation 1 0 0 0.19133512642124711
+  translation -1.23885 1.19699 0.29683
+  rotation -0.7071067811865475 0.7071067811865475 0 -0.06043529389957471
   children [
     Group {
       children [
@@ -510,8 +488,8 @@ Robot {
             axis 0 1 0
           }
           endPoint Solid {
-            translation 8.997944700177166e-31 0.06224406826913229 -0.2502923030491798
-            rotation 1 -5.26349617810512e-30 -6.2566086645400484e-30 2.903373654943358
+            translation 6.50031e-31 0.0575246 -0.269728
+            rotation 1 -5.362807426748613e-30 -6.355919913183541e-30 2.903373654943358
             children [
               DEF CASTER Shape {
                 appearance PBRAppearance {
@@ -568,6 +546,28 @@ Robot {
             height 0.5
             radius 0.09
           }
+        }
+      ]
+    }
+    UR3e {
+      translation 0.00296 -0.00062 0.23
+      rotation 0 1 0 0
+      controller "ure_controller_scara"
+      controllerArgs [
+        "3"
+      ]
+      selfCollision FALSE
+      toolSlot [
+        Camera {
+          name "color_sensor"
+          recognition Recognition {
+          }
+        }
+        Robotiq3fGripper {
+        }
+        DistanceSensor {
+          translation 0 0.1 0
+          rotation 0 0 1 1.570796
         }
       ]
     }
