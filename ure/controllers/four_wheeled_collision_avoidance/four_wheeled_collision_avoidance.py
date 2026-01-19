@@ -3,26 +3,22 @@ from controller import Robot
 TIME_STEP = 64
 robot = Robot()
 
-# --- CONFIGURACIÓN DE RUEDAS ---
+wheelsNames = ['wheel1', 'wheel2', 'wheel3', 'wheel4']
 wheels = []
-wheelsNames = ['wheel1', 'wheel2', 'wheel3', 'wheel4'] # Solo las 2 ruedas de tu robot
 
 for name in wheelsNames:
     wheel = robot.getDevice(name)
-    wheel.setPosition(float('inf')) # Modo de rotación continua
+    wheel.setPosition(float('inf'))  # rotación continua
     wheel.setVelocity(0.0)
     wheels.append(wheel)
 
-# --- BUCLE PRINCIPAL ---
 while robot.step(TIME_STEP) != -1:
-    # Definir velocidad constante
-    # Nota: Si va hacia atrás, cambia estos números a positivos (1.0)
+    # Lado izquierdo: wheel1 y wheel3
     leftSpeed = -1.0
+    # Lado derecho: wheel2 y wheel4
     rightSpeed = -1.0
-    
-    # Aplicar velocidad a las ruedas
-    wheels[0].setVelocity(leftSpeed)
-    wheels[1].setVelocity(rightSpeed)
 
-
-
+    wheels[0].setVelocity(leftSpeed)   # wheel1
+    wheels[2].setVelocity(leftSpeed)   # wheel3
+    wheels[1].setVelocity(rightSpeed)  # wheel2
+    wheels[3].setVelocity(rightSpeed)  # wheel4

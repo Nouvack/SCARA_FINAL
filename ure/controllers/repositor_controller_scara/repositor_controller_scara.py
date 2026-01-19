@@ -1,39 +1,35 @@
-"""repositor_controller_scara controller."""
+"""repositor_controller_scara controller (imagen/ROI en vez de recognition)."""
 
 from controller import Robot
 import numpy as np
 
 TIME_STEP = 32
 
-# Estados de la máquina de estados
-IDLE, LOOKING_AT_WHITE, PICKING_FROM_WHITE, MOVING_TO_SHELF_WHITE, PLACING_ON_SHELF_WHITE, \
+# Estados
+BOOT, IDLE, LOOKING_AT_WHITE, PICKING_FROM_WHITE, MOVING_TO_SHELF_WHITE, PLACING_ON_SHELF_WHITE, \
 LOOKING_AT_BLACK, PICKING_FROM_BLACK, MOVING_TO_SHELF_BLACK, PLACING_ON_SHELF_BLACK, \
-RETURNING_HOME = range(10)
+RETURNING_HOME, WAITING = range(12)
 
 robot = Robot()
-
-# Margen para evitar límites exactos
 EPS = 0.001
 
 counter = 0
-state = IDLE
+state = BOOT
 items_placed = 0
-speed = 1.0
+
+# Velocidad: arrancamos suave y luego subimos
+BOOT_SPEED = 0.35
+RUN_SPEED  = 0.90
 
 # Posiciones (Formato: [Pan, Lift, Elbow, W1, W2, W3])
 home_position = [0.0, -1.57, 0.0, -1.57, 0.0, 0.0]
 
-# Posiciones Cesta BLANCA (Izquierda/Frente)
-# Pan ~0.5 (izquierda), Lift levanta, Elbow flexiona
-white_look_position = [1.0, -1.8, 1.2, -1.0, -1.57, 0.0] 
+white_look_position = [1.0, -1.8, 1.2, -1.0, -1.57, 0.0]
 white_pick_position = [1.0, -2.0, 1.3, -0.9, -1.57, 0.0]
 
-# Posiciones Cesta NEGRA (Derecha/Frente)
-# Pan ~-0.5 (derecha)
 black_look_position = [-1.0, -1.8, 1.2, -1.0, -1.57, 0.0]
 black_pick_position = [-1.0, -2.0, 1.3, -0.9, -1.57, 0.0]
 
-# Posiciones Estante (Atrás - Pan ~3.14)
 shelf_positions = [
     [3.14, -1.5, 1.0, -1.0, -1.57, 0.0],
     [3.14, -1.3, 0.8, -1.1, -1.57, 0.0],
@@ -41,53 +37,48 @@ shelf_positions = [
     [3.14, -1.5, 1.0, -1.0, -1.57, 0.0],
 ]
 
-# -----------------------
-# Inicialización
-# -----------------------
-print(f'[{robot.getName()}] Inicializando controlador inteligente (6 ejes)...')
+print(f'[{robot.getName()}] Inicializando controlador (ROI por imagen, 6 ejes)...')
 
+# Pinza
 hand_motors = [
     robot.getDevice("finger_1_joint_1"),
     robot.getDevice("finger_2_joint_1"),
     robot.getDevice("finger_middle_joint_1"),
 ]
-for m in hand_motors:
-    if m: m.setVelocity(speed)
 
-# Usamos los 6 motores del UR3e para movimiento completo
+# Brazo UR
 motor_names = [
     "shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint",
     "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"
 ]
 ur_motors = [robot.getDevice(name) for name in motor_names]
+for i, m in enumerate(ur_motors):
+    if not m:
+        print(f"[{robot.getName()}] Error: Motor '{motor_names[i]}' no encontrado.")
 
-for m in ur_motors:
-    if m: m.setVelocity(speed)
-    else: print(f"Error: Motor no encontrado en la lista.")
+def set_all_speeds(v):
+    for m in ur_motors:
+        if m: m.setVelocity(v)
+    for m in hand_motors:
+        if m: m.setVelocity(v)
 
-# Cámara IMPRESCINDIBLE para esta tarea
+set_all_speeds(BOOT_SPEED)
+
+# Cámara (imagen)
 camera = robot.getDevice("color_sensor")
 if camera:
     camera.enable(TIME_STEP)
-    camera.recognitionEnable(TIME_STEP)
-    print(f'[{robot.getName()}] Cámara y reconocimiento activados.')
+    print(f'[{robot.getName()}] Cámara activada (modo imagen).')
 else:
     print(f'[{robot.getName()}] ADVERTENCIA: No se encontró cámara "color_sensor".')
 
 # -----------------------
-# Funciones
+# Utilidades
 # -----------------------
-def check_basket_content():
-    """Retorna True si la cámara detecta objetos reconocimiento."""
-    if not camera: return True
-    
-    number_of_objects = camera.getRecognitionNumberOfObjects()
-    print(f'[{robot.getName()}] Veo {number_of_objects} objetos.')
-    return number_of_objects > 0
-
 def clamp_with_eps(motor, pos):
     mn, mx = motor.getMinPosition(), motor.getMaxPosition()
-    if mx == float("inf"): return max(mn + EPS, pos)
+    if mx == float("inf"):
+        return max(mn + EPS, pos)
     return max(mn + EPS, min(mx - EPS, pos))
 
 def close_gripper():
@@ -100,97 +91,175 @@ def open_gripper():
         if m: m.setPosition(m.getMinPosition() + EPS)
 
 def move_to_position(positions):
-    """Mueve los 6 motores a las posiciones indicadas."""
     for i, p in enumerate(positions):
         if i < len(ur_motors) and ur_motors[i]:
             ur_motors[i].setPosition(p)
 
+def get_roi_stats():
+    """
+    Devuelve (brightness_mean, brightness_std) de un ROI central inferior.
+    Ajusta el ROI si tu cámara apunta diferente.
+    """
+    if not camera:
+        return None, None
+
+    img = camera.getImage()
+    if img is None:
+        return None, None
+
+    w = camera.getWidth()
+    h = camera.getHeight()
+
+    # ROI: parte inferior-central (suele capturar interior de cesta si miras hacia delante)
+    x0 = int(w * 0.35)
+    x1 = int(w * 0.65)
+    y0 = int(h * 0.55)
+    y1 = int(h * 0.90)
+
+    # Extraer pixels (BGRA en Webots). Usamos API de cámara para sacar RGB por pixel.
+    # Nota: esto no es lo más rápido, pero es simple y suficiente para empezar.
+    vals = []
+    for y in range(y0, y1):
+        for x in range(x0, x1):
+            r = camera.imageGetRed(img, w, x, y)
+            g = camera.imageGetGreen(img, w, x, y)
+            b = camera.imageGetBlue(img, w, x, y)
+            # brillo simple
+            vals.append((r + g + b) / 3.0)
+
+    if not vals:
+        return None, None
+
+    arr = np.array(vals, dtype=np.float32)
+    return float(arr.mean()), float(arr.std())
+
+def basket_has_object():
+    """
+    Heurística:
+    - Si hay una lata/objeto, normalmente sube la variación (std) o cambia el brillo medio.
+    - Ajusta umbrales según tu escena.
+    """
+    mean_b, std_b = get_roi_stats()
+    if mean_b is None:
+        return False
+
+    # DEBUG útil (descomenta si quieres ver números):
+    # print(f'[{robot.getName()}] ROI mean={mean_b:.1f} std={std_b:.1f}')
+
+    # Umbral base por variación:
+    # - si std es muy bajo, suele ser superficie uniforme (cesta vacía / fondo plano)
+    # - si std sube, hay bordes/objeto dentro
+    return std_b > 6.0  # prueba 4.0–10.0 según tu mundo
+
 # -----------------------
-# Bucle Principal
+# Bucle principal
 # -----------------------
 open_gripper()
 
 while robot.step(TIME_STEP) != -1:
-    if counter <= 0:
-        # --- Lógica Cesta BLANCA ---
-        if state == IDLE:
-            print(f'[{robot.getName()}] -> Revisando Cesta BLANCA...')
-            state = LOOKING_AT_WHITE
-            move_to_position(white_look_position)
-            counter = 40
+    if counter > 0:
+        counter -= 1
+        continue
 
-        elif state == LOOKING_AT_WHITE:
-            # Aquí el robot está "mirando"
-            # Verificamos si hay algo
-            if check_basket_content():
-                print(f'[{robot.getName()}] ¡Objeto detectado en Blanca! Iniciando recogida.')
-                state = PICKING_FROM_WHITE
-                move_to_position(white_pick_position)
-                counter = 30
-            else:
-                print(f'[{robot.getName()}] Cesta Blanca vacía. Pasando a Negra.')
-                state = LOOKING_AT_BLACK # Saltar recogida
-                move_to_position(black_look_position)
-                counter = 50
+    # --- BOOT: ir a home y estabilizar ---
+    if state == BOOT:
+        print(f'[{robot.getName()}] BOOT -> yendo a HOME para estabilizar...')
+        move_to_position(home_position)
+        counter = 80
+        state = RETURNING_HOME
+        continue
 
-        elif state == PICKING_FROM_WHITE:
-            close_gripper()
-            # Pequeña espera para asegurar agarre antes de mover
-            state = MOVING_TO_SHELF_WHITE
-            counter = 20 # Tiempo de cierre
+    # --- IDLE -> mirar blanca ---
+    if state == IDLE:
+        print(f'[{robot.getName()}] -> Revisando Cesta BLANCA...')
+        move_to_position(white_look_position)
+        counter = 45
+        state = LOOKING_AT_WHITE
+        continue
 
-        elif state == MOVING_TO_SHELF_WHITE:
-            shelf_pos = shelf_positions[items_placed % len(shelf_positions)]
-            print(f'[{robot.getName()}] Llevando al estante...')
-            move_to_position(shelf_pos)
-            state = PLACING_ON_SHELF_WHITE
-            counter = 60
-
-        elif state == PLACING_ON_SHELF_WHITE:
-            open_gripper()
-            items_placed += 1
-            state = LOOKING_AT_BLACK # Siguiente cesta
-            print(f'[{robot.getName()}] Objeto colocado. Vamos a Cesta NEGRA.')
+    # --- LOOK BLANCA ---
+    if state == LOOKING_AT_WHITE:
+        if basket_has_object():
+            print(f'[{robot.getName()}] Objeto probable en BLANCA. Bajando para recoger...')
+            move_to_position(white_pick_position)
+            counter = 35
+            state = PICKING_FROM_WHITE
+        else:
+            print(f'[{robot.getName()}] Cesta BLANCA parece vacía. Pasando a NEGRA...')
             move_to_position(black_look_position)
-            counter = 50
+            counter = 55
+            state = LOOKING_AT_BLACK
+        continue
 
-        # --- Lógica Cesta NEGRA ---
-        elif state == LOOKING_AT_BLACK:
-            # Estado de observación para negra
-            if check_basket_content():
-                print(f'[{robot.getName()}] ¡Objeto detectado en Negra! Iniciando recogida.')
-                state = PICKING_FROM_BLACK
-                move_to_position(black_pick_position)
-                counter = 30
-            else:
-                print(f'[{robot.getName()}] Cesta Negra vacía. Volviendo a inicio.')
-                state = RETURNING_HOME
-                move_to_position(home_position)
-                counter = 50
+    if state == PICKING_FROM_WHITE:
+        close_gripper()
+        counter = 25
+        state = MOVING_TO_SHELF_WHITE
+        continue
 
-        elif state == PICKING_FROM_BLACK:
-            close_gripper()
-            state = MOVING_TO_SHELF_BLACK
-            counter = 20
+    if state == MOVING_TO_SHELF_WHITE:
+        shelf_pos = shelf_positions[items_placed % len(shelf_positions)]
+        print(f'[{robot.getName()}] Llevando al estante (desde BLANCA)...')
+        move_to_position(shelf_pos)
+        counter = 70
+        state = PLACING_ON_SHELF_WHITE
+        continue
 
-        elif state == MOVING_TO_SHELF_BLACK:
-            shelf_pos = shelf_positions[items_placed % len(shelf_positions)]
-            print(f'[{robot.getName()}] Llevando al estante...')
-            move_to_position(shelf_pos)
-            state = PLACING_ON_SHELF_BLACK
-            counter = 60
-        
-        elif state == PLACING_ON_SHELF_BLACK:
-            open_gripper()
-            items_placed += 1
-            print(f'[{robot.getName()}] Ciclo terminado. Volviendo a Home.')
-            state = RETURNING_HOME
-            move_to_position(home_position)
-            counter = 50
+    if state == PLACING_ON_SHELF_WHITE:
+        open_gripper()
+        items_placed += 1
+        print(f'[{robot.getName()}] Colocado. Ahora reviso NEGRA...')
+        move_to_position(black_look_position)
+        counter = 55
+        state = LOOKING_AT_BLACK
+        continue
 
-        elif state == RETURNING_HOME:
-            state = IDLE
-            counter = 20
+    # --- LOOK NEGRA ---
+    if state == LOOKING_AT_BLACK:
+        if basket_has_object():
+            print(f'[{robot.getName()}] Objeto probable en NEGRA. Bajando para recoger...')
+            move_to_position(black_pick_position)
+            counter = 35
+            state = PICKING_FROM_BLACK
+        else:
+            print(f'[{robot.getName()}] Cesta NEGRA parece vacía. Me quedo esperando...')
+            # Evita vaivén: no vuelvas a home cada vez
+            state = WAITING
+            counter = 120
+        continue
 
-    counter -= 1
+    if state == PICKING_FROM_BLACK:
+        close_gripper()
+        counter = 25
+        state = MOVING_TO_SHELF_BLACK
+        continue
 
+    if state == MOVING_TO_SHELF_BLACK:
+        shelf_pos = shelf_positions[items_placed % len(shelf_positions)]
+        print(f'[{robot.getName()}] Llevando al estante (desde NEGRA)...')
+        move_to_position(shelf_pos)
+        counter = 70
+        state = PLACING_ON_SHELF_BLACK
+        continue
+
+    if state == PLACING_ON_SHELF_BLACK:
+        open_gripper()
+        items_placed += 1
+        print(f'[{robot.getName()}] Colocado. Volviendo a HOME...')
+        move_to_position(home_position)
+        counter = 70
+        state = RETURNING_HOME
+        continue
+
+    if state == RETURNING_HOME:
+        # Ya estabilizado: subimos velocidad “normal”
+        set_all_speeds(RUN_SPEED)
+        state = IDLE
+        counter = 25
+        continue
+
+    if state == WAITING:
+        # después de esperar, vuelve a intentar desde blanca
+        state = IDLE
+        counter = 10
+        continue
