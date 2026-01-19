@@ -46,8 +46,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.0495673509187102 -0.7765320764307734 -0.62812499711205 0.20254982295408142
-  position -4.250941363087815 0.8776641206240174 0.00693719267691912
+  orientation 0.029103833268309585 -0.9126147397933879 0.40778340280219466 0.15609181240813494
+  position -2.533572631332777 1.3379701013205074 -0.007951536024054962
   exposure 1.7
 }
 TexturedBackground {
@@ -471,7 +471,7 @@ Robot {
           }
         ]
         name "solid(1)"
-        boundingObject USE box
+        boundingObject USE WHEEL
         physics Physics {
         }
       }
@@ -502,7 +502,7 @@ Robot {
           }
         ]
         name "solid(2)"
-        boundingObject USE box
+        boundingObject USE WHEEL
         physics Physics {
         }
       }
@@ -533,9 +533,7 @@ Robot {
           }
         ]
         name "solid(3)"
-        boundingObject Box {
-          size 0.1 0.1 0.1
-        }
+        boundingObject USE WHEEL
         physics Physics {
         }
       }
@@ -565,7 +563,7 @@ Robot {
             }
           }
         ]
-        boundingObject USE box
+        boundingObject USE WHEEL
         physics Physics {
         }
       }
