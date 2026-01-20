@@ -24,11 +24,14 @@ RUN_SPEED  = 0.90
 # Posiciones (Formato: [Pan, Lift, Elbow, W1, W2, W3])
 home_position = [0.0, -1.57, 0.0, -1.57, 0.0, 0.0]
 
-white_look_position = [1.0, -1.8, 1.2, -1.0, -1.57, 0.0]
-white_pick_position = [1.0, -2.0, 1.3, -0.9, -1.57, 0.0]
+# Canastas están FRENTE al robot móvil
+# Canasta BLANCA (X=-0.15, ligeramente a la izquierda)
+white_look_position = [-0.2, -1.0, 0.5, -1.0, -1.57, 0.0]
+white_pick_position = [-0.2, -1.5, 1.2, -1.4, -1.57, 0.0]
 
-black_look_position = [-1.0, -1.8, 1.2, -1.0, -1.57, 0.0]
-black_pick_position = [-1.0, -2.0, 1.3, -0.9, -1.57, 0.0]
+# Canasta NEGRA (X=0.53, ligeramente a la derecha)
+black_look_position = [0.2, -1.0, 0.5, -1.0, -1.57, 0.0]
+black_pick_position = [0.2, -1.5, 1.2, -1.4, -1.57, 0.0]
 
 shelf_positions = [
     [3.14, -1.5, 1.0, -1.0, -1.57, 0.0],
@@ -143,13 +146,13 @@ def basket_has_object():
     if mean_b is None:
         return False
 
-    # DEBUG útil (descomenta si quieres ver números):
-    # print(f'[{robot.getName()}] ROI mean={mean_b:.1f} std={std_b:.1f}')
+    # DEBUG útil - HABILITADO para ver valores
+    print(f'[{robot.getName()}] ROI mean={mean_b:.1f} std={std_b:.1f}')
 
     # Umbral base por variación:
     # - si std es muy bajo, suele ser superficie uniforme (cesta vacía / fondo plano)
     # - si std sube, hay bordes/objeto dentro
-    return std_b > 6.0  # prueba 4.0–10.0 según tu mundo
+    return std_b > 3.0  # Reducido de 6.0 a 3.0 para ser más sensible
 
 # -----------------------
 # Bucle principal
@@ -259,7 +262,9 @@ while robot.step(TIME_STEP) != -1:
         continue
 
     if state == WAITING:
-        # después de esperar, vuelve a intentar desde blanca
-        state = IDLE
-        counter = 10
+        # después de esperar, vuelve a revisar desde blanca otra vez
+        print(f'[{robot.getName()}] Esperando completado. Revisando canastas nuevamente...')
+        move_to_position(white_look_position)
+        counter = 45
+        state = LOOKING_AT_WHITE
         continue
