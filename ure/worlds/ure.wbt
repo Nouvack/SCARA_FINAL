@@ -12,24 +12,20 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/computers/protos/DesktopComputer.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/computers/protos/ComputerMouse.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/tools/protos/Wrench.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/tools/protos/PlatformCart.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Radiator.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/pallet/protos/WoodenPalletStack.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/cabinet/protos/Cabinet.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/GlossyPaint.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/CardboardBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/apartment_structure/protos/Wall.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Roughcast.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/solids/protos/SolidBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/GalvanizedMetal.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/CorrugatedMetal.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/fire_extinguisher/protos/FireExtinguisher.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/universal_robots/protos/UR3e.proto"
 EXTERNPROTO "../protos/Robotiq3fGripper.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/universal_robots/protos/UR5e.proto"
-EXTERNPROTO "../protos/UR10e.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/conveyors/protos/ConveyorBelt.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/PlasticCrate.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/universal_robots/protos/UR10e.proto"
 
 WorldInfo {
   info [
@@ -45,14 +41,14 @@ WorldInfo {
     ContactProperties {
       material1 "slope"
       coulombFriction [
-        0.5
+        0.8
       ]
     }
   ]
 }
 Viewpoint {
-  orientation -0.14478918431006085 0.9297442592274957 0.33854350464946503 0.8622973555668654
-  position -0.9294933838143556 -0.5459525121627484 2.7846440095059704
+  orientation 0.3490686184627488 -0.054442471263438645 -0.9355143595515986 3.2841061103476563
+  position 6.080292487488622 -0.7453660853870929 5.821776846301436
   exposure 1.7
 }
 TexturedBackground {
@@ -105,38 +101,9 @@ ComputerMouse {
   rotation 0 0 -1 -1.5707953071795862
   mass 0
 }
-Table {
-  translation -4.09991 -0.81333 0
-  rotation 0 0 1 -1.5707963071795863
-  name "table(1)"
-  size 1.8 0.7 0.8
-  feetSize 0.05 0.05
-  trayAppearance PBRAppearance {
-    baseColor 0.926 0.912 0.698
-    roughness 0.8
-    metalness 0
-  }
-  legAppearance BrushedAluminium {
-    colorOverride 0.333 0.341 0.325
-  }
-}
 Wrench {
-  translation -1.2388599919906513 -0.5885998479535617 -0.001029652765278847
-  rotation -6.759079312141433e-06 -7.486399875015119e-05 0.9999999971748482 -2.6179954112880788
-}
-PlatformCart {
-  hidden position_0_0 2.2662220553599222e-10
-  hidden position2_0_0 -1.1644748972466152e-12
-  hidden position_0_1 2.2664896220438945e-10
-  hidden position2_0_1 -3.078623575611015e-13
-  hidden position_0_2 -6.355804771374096e-12
-  hidden position_0_3 -6.249223361010081e-12
-  hidden rotation_2 1 6.751978666082958e-10 6.845328864720265e-10 1.5708
-  hidden rotation_3 1 6.786874665261345e-10 6.812038137465324e-10 1.5708
-  hidden rotation_4 1 -5.402414211456086e-11 5.4024340556679876e-11 1.5708
-  hidden rotation_5 1 -5.311820345417138e-11 5.311839856858575e-11 1.5708
-  translation 0.927644845319204 1.793305713852876 -0.0007518916359243177
-  rotation 0.0001646680066044761 2.1941695220012844e-05 0.9999999862015047 -2.879793295142136
+  translation -1.2388599919976242 -0.5885998479225069 -0.0010296527652788475
+  rotation -6.759079348827937e-06 -7.486399873662512e-05 0.9999999971748483 -2.6179954122925264
 }
 Radiator {
   translation 0.528902 2.341308 0.33
@@ -144,37 +111,40 @@ Radiator {
   numberOfFins 16
 }
 WoodenPalletStack {
-  translation 2.8 -0.23 0
+  translation 2.8 -0.32 0
   rotation 0 0 1 -1.5707953071795862
   palletNumber 5
   palletSize 0.8 1 0.11
 }
-Cabinet {
-  hidden position_6_0 1.6015341629859536e-06
-  hidden translation_7 -3.1870529843406856e-07 -2.5521251778570786e-13 0
-  hidden rotation_7 0 0 1 1.601580243414016e-06
-  hidden position_10_0 -1.3615450153992015e-06
-  hidden translation_11 -2.3030533935470406e-07 1.5648593532091581e-13 0
-  hidden rotation_11 0 0 -1 1.361480209887104e-06
-  translation -0.41 2.47 0
+ConveyorBelt {
+  translation 1.29 0.080001 0
   rotation 0 0 1 -1.5707953071795862
-  name "cabinet(1)"
-  layout [
-    "RightSidedDoor (1, 1, 1, 5, 1.5)"
-    "LeftSidedDoor (2, 1, 2, 5, 1.5)"
+  name "conveyor belt(1)"
+}
+Solid {
+  translation -0.26 2.08 0.48
+  rotation 0 0 1 3.14159
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.411765 0.207843 0
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../models/Untitled.stl"
+        ]
+      }
+    }
   ]
-  primaryAppearance GlossyPaint {
-    baseColor 0.729 0.741 0.713
-  }
-  secondaryAppearance GlossyPaint {
-    baseColor 0.729 0.741 0.713
-  }
+  name "shelving"
 }
 CardboardBox {
-  translation -1.21 2.18 0.3
+  translation -1.78 2.18 0.3
 }
 CardboardBox {
-  translation -1.198389 2.100678 0.75
+  translation -1.74175 2.12182 0.75
   rotation 0 0 1 2.094395
   name "cardboard box(1)"
   size 0.4 0.6 0.3
@@ -242,62 +212,10 @@ SolidBox {
   }
 }
 SolidBox {
-  translation 1.015 -0.0323 0.45
-  name "box(5)"
-  size 0.8 0.4 0.91
-  appearance GalvanizedMetal {
-  }
-}
-SolidBox {
-  translation 0.8 0.3324 0.8246
-  rotation 1 0 0 2.61799
-  name "box(6)"
-  size 0.3 0.5 0.02
-  contactMaterial "slope"
-  appearance GalvanizedMetal {
-  }
-}
-SolidBox {
-  translation 0.96 0.339556 0.837316
-  rotation -0.4472131236215756 -0.4472131236215756 0.7745972141192264 -1.823476307179586
-  name "box(7)"
-  size 0.05 0.02 0.5
-  appearance GalvanizedMetal {
-  }
-}
-SolidBox {
-  translation 0.64 0.339556 0.837316
-  rotation -0.4472131236215756 -0.4472131236215756 0.7745972141192264 -1.823476307179586
-  name "box(8)"
-  size 0.05 0.02 0.5
-  appearance GalvanizedMetal {
-  }
-}
-SolidBox {
-  translation 0.64 0.239196 0.583496
-  rotation 0.6947470600351803 0.6947460600350939 -0.1861570160863869 2.773492
-  name "box(9)"
-  size 0.05 0.02 0.5
-  appearance GalvanizedMetal {
-  }
-}
-SolidBox {
-  translation 0.96 0.239196 0.583496
-  rotation 0.6947470600351803 0.6947460600350939 -0.1861570160863869 2.773492
-  name "box(10)"
-  size 0.05 0.02 0.5
-  appearance GalvanizedMetal {
-  }
-}
-SolidBox {
-  translation 1.77 -0.11 0.375
-  rotation 0 0 1 3.1415919999999997
+  translation -0.135 1.4077 0.305
   name "box(2)"
-  size 0.2 0.18 0.75
-  appearance CorrugatedMetal {
-    textureTransform TextureTransform {
-      scale 0.7 0.7
-    }
+  size 1.5 0.4 0.61
+  appearance GalvanizedMetal {
   }
 }
 SolidBox {
@@ -322,150 +240,16 @@ SolidBox {
     }
   }
 }
-FireExtinguisher {
-  translation -0.7577098605015532 1.7899999799347552 -0.0011771997345778051
-  rotation 0.0005928634790114967 -0.0007924536780046914 -0.9999995102649117 1.5708004883835065
-}
-UR3e {
-  hidden position_0_0 1.2121776755790832e-05
-  hidden rotation_1 0 0 1 1.2121780942599955e-05
-  hidden position_1_0 2.765054420261563e-05
-  hidden rotation_2 0 1 0 1.5708236505442026
-  hidden position_2_0 1.0306111484051443e-05
-  hidden rotation_3 0 0.9999999999999999 0 1.0306132593449073e-05
-  hidden position_3_0 2.725873807894675e-06
-  hidden rotation_4 0 1 0 1.5707987258738079
-  hidden position_4_0 -1.4185923733026525e-06
-  hidden rotation_5 0 0 -0.9999999999999999 1.4186656755700294e-06
-  hidden position_5_0 1.4140186585413613e-06
-  hidden rotation_6 0 0.9999999999999999 0 1.4139623837800866e-06
-  hidden position_8_0 1.8336465397764623e-07
-  hidden position_8_1 1.8336465813456662e-07
-  hidden position_8_2 0.049499947328838376
-  hidden rotation_9 0.7068252250603843 0.7073882252405282 3.0648043497833677e-06 3.141598129709971
-  hidden position_9_0 0.04950005267187947
-  hidden rotation_10 0 0 1 5.16191365590357e-08
-  hidden position_10_0 7.658557734796498e-09
-  hidden rotation_11 0 0 -1 0.5199999923414426
-  hidden position_11_0 -0.05230000000000888
-  hidden rotation_13 0.7068252250603843 0.7073882252405282 3.0648043512524735e-06 3.141598129709974
-  hidden position_13_0 0.04950005267187284
-  hidden rotation_14 0 0 1 4.2146848510894035e-08
-  hidden position_14_0 7.658556900506844e-09
-  hidden rotation_15 0 0 -1 0.5199999923414435
-  hidden position_15_0 -0.05230000000000888
-  hidden rotation_17 0 0 -0.9999999999999999 4.2146848510894035e-08
-  hidden position_17_0 -7.658447085003702e-09
-  hidden rotation_18 0 0 -1 0.5200000076584469
-  hidden position_18_0 -0.05229999999999155
-  translation 1.30296 0.079391 0.91
-  rotation 0 1 0 0
-  controller "ure_controller_scara"
-  controllerArgs [
-    "3"
-  ]
-  selfCollision FALSE
-  toolSlot [
-    Camera {
-      name "color_sensor"
-      recognition Recognition {
-      }
-    }
-    Robotiq3fGripper {
-    }
-    DistanceSensor {
-      translation 0 0.1 0
-      rotation 0 0 1 1.570796
-    }
-  ]
-}
 UR5e {
-  hidden position_0_0 3.105257288120565e-05
-  hidden rotation_1 0 0 1 3.10525755403037e-05
-  hidden position_1_0 7.467040148572187e-05
-  hidden rotation_2 0 1 0 1.5708706704014854
-  hidden position_2_0 2.4390925323997735e-05
-  hidden rotation_3 0 1 0 2.4390920535224827e-05
-  hidden position_3_0 -4.1879428822610976e-06
-  hidden rotation_4 0 1 0 1.5707918120571178
-  hidden position_4_0 -1.6047838034400123e-06
-  hidden rotation_5 0 0 -1 1.6049041769309786e-06
-  hidden position_5_0 -1.6024611468878902e-06
-  hidden rotation_6 0 -1 0 1.6024118731940297e-06
-  hidden position_7_0 1.8336533581240862e-07
-  hidden position_7_1 1.8336533871663544e-07
-  hidden position_7_2 0.049499947332721464
-  hidden rotation_8 0.7068252250603843 0.7073882252405282 3.064804590752421e-06 3.141598129710453
-  hidden position_8_0 0.04950005266840438
-  hidden rotation_9 0 0 1 5.16191365590357e-08
-  hidden position_9_0 7.658064124407471e-09
-  hidden rotation_10 0 0 -1 0.5199999923419357
-  hidden position_10_0 -0.05230000000002125
-  hidden rotation_12 0.7068252250603843 0.7073882252405282 3.0648045917788117e-06 3.1415981297104554
-  hidden position_12_0 0.04950005266837562
-  hidden rotation_13 0 0 1 5.16191365590357e-08
-  hidden position_13_0 7.658060126399334e-09
-  hidden rotation_14 0 0 -1 0.51999999234194
-  hidden position_14_0 -0.052300000000021316
-  hidden rotation_16 0 0 -1 5.16191365590357e-08
-  hidden position_16_0 -7.657864564691863e-09
-  hidden rotation_17 0 0 -1 0.5200000076578648
-  hidden position_17_0 -0.05229999999997867
-  translation 0 0 0.61
-  rotation 5.67193e-08 2.39745e-09 -1 1.5708
-  controller "ure_can_grasper"
-  selfCollision FALSE
-  toolSlot [
-    Robotiq3fGripper {
-    }
-    DistanceSensor {
-      translation 0 0.1 0
-      rotation 0 0 1 1.570796
-    }
-  ]
-}
-UR10e {
-  hidden position_0_0 -5.940391390159786e-05
-  hidden rotation_1 0 0 -1 5.940391596758311e-05
-  hidden position_1_0 0.00014299499324941131
-  hidden rotation_2 0 1 0 1.5709389949932495
-  hidden position_2_0 3.860545708498036e-05
-  hidden rotation_3 0 1 0 3.860545494967622e-05
-  hidden position_3_0 5.22218579119864e-06
-  hidden rotation_4 0 1 0 1.570801222185791
-  hidden position_4_0 1.7258778430788436e-06
-  hidden rotation_5 0 0 1 1.7259636206115136e-06
-  hidden position_5_0 -1.6664716805451337e-06
-  hidden rotation_6 0 -1 0 1.666533503534343e-06
-  hidden position_8_0 1.8336557759429703e-07
-  hidden position_8_1 1.8336557338758633e-07
-  hidden position_8_2 0.049500052672139215
-  hidden rotation_9 0.7068252250603843 0.7073882252405282 3.064804676201207e-06 3.141598129710624
-  hidden position_9_0 0.049499947332721464
-  hidden rotation_10 0 0 -1 5.16191365590357e-08
-  hidden position_10_0 -7.65785109951043e-09
-  hidden rotation_11 0 0 -1 0.5200000076578509
-  hidden position_11_0 -0.05229999999996062
-  hidden rotation_13 0.7068252250603843 0.7073882252405282 3.064804674714502e-06 3.1415981297106215
-  hidden position_13_0 0.04949994733271791
-  hidden rotation_14 0 0 -1 4.2146848510894035e-08
-  hidden position_14_0 -7.657852130193987e-09
-  hidden rotation_15 0 0 -1 0.5200000076578518
-  hidden position_15_0 -0.05229999999996067
-  hidden rotation_17 0 0 1 5.16191365590357e-08
-  hidden position_17_0 7.658591457514832e-09
-  hidden rotation_18 0 0 -1 0.5199999923414088
-  hidden position_18_0 -0.052300000000002664
-  translation -0.56 -0.1 0.61
-  rotation 4.66309e-07 -7.19235e-09 1 -1.5707953071795862
+  translation 0 -0.05 0.61
+  rotation 0 0 1 -1.570795613280012
   controller "ure_controller_scara"
   selfCollision FALSE
   toolSlot [
     Camera {
-      translation -2.93856e-07 0.080001 -0.01
-      rotation 0.70710528118436 0.707108281185553 3.3905113482557537e-09 3.14159
+      translation 7.0424e-14 0.08 4.39663e-08
+      rotation -0.7071067811862364 -0.7071067811862364 9.381857096790023e-07 3.14159
       name "color_sensor"
-      fieldOfView 1
       width 256
       height 256
       recognition Recognition {
@@ -479,9 +263,25 @@ UR10e {
     }
   ]
 }
+UR10e {
+  translation 0 1.4 0.62
+  rotation 0 0 1 3.14159
+  controller "repositor_controller_scara"
+  toolSlot [
+    Camera {
+      translation 1.8366e-07 0.08 0
+      rotation 0 0 1 1.5708
+      name "color_sensor"
+      width 256
+      height 256
+      recognition Recognition {
+      }
+    }
+    Robotiq3fGripper {
+    }
+  ]
+}
 ConveyorBelt {
-  hidden translation_1 1.7368328997235949e-12 -2.1826984664130578e-13 0.44993329199999266
-  hidden rotation_1 -0.12425767099812858 -0.992249984226818 -5.995788529356231e-10 0.0001262865403636795
   translation 3.18 -1.05 0
   rotation 0 0 1 3.141592
   size 8 0.7 0.6
@@ -493,74 +293,30 @@ ConveyorBelt {
   borderHeight 0
   speed 0.2
 }
-ConveyorBelt {
-  hidden translation_1 0 0 0.11249607600000022
-  translation 1.77 2.55 0.75
-  rotation 0 0 1 -1.5707973071795864
-  name "conveyor belt(2)"
-  size 10 0.15 0.15
-  appearance CorrugatedMetal {
-    textureTransform TextureTransform {
-      scale 6 3.1
-    }
-  }
-  borderHeight 0
-  speed 0.2
-}
-ConveyorBelt {
-  hidden translation_1 -1.0833677026174084e-05 1.5578852652353703e-09 0.18747868011041838
-  hidden rotation_1 0.0018211669649172081 0.9999978897290867 -0.0009507303820848328 9.357280479002198e-05
-  translation 0 0.69 0
-  rotation 0 1 0 0
-  name "conveyor belt(1)"
-  size 13 0.5 0.25
-  appearance CorrugatedMetal {
-    textureTransform TextureTransform {
-      scale 6 3.1
-    }
-  }
-  borderHeight 0
-  speed 0.062
-  acceleration 0.012
-  timer 90
-}
 PlasticCrate {
-  translation 6.200118137341211 0.6800005581254877 0.24876482033424716
-  rotation -0.0005759027334150133 0.9999922022089061 -0.003906898696420427 0.0002352932080915559
-  size 0.6 0.45 0.4
-  mass 1
-}
-PlasticCrate {
-  translation 5.600175498079732 0.6799992897533469 0.24888033356862466
-  rotation 0.0023291468465868317 0.9999785135532916 -0.006127602036408766 0.00016896806060420953
-  name "plastic crate(1)"
-  size 0.6 0.45 0.4
-  mass 1
-}
-PlasticCrate {
-  translation 5.0002119006030545 0.6799984263881957 0.24898195738497936
-  rotation 0.00349396761733387 0.9999744391259019 -0.00623805138863005 0.0001586919454038825
-  name "plastic crate(2)"
-  size 0.6 0.45 0.4
-  mass 1
-}
-PlasticCrate {
-  translation 4.400231080872438 0.6799986369240032 0.24908126446539033
-  rotation 0.001839626027418375 0.9999787025162911 -0.00626181203122812 0.00015132350080454974
+  translation 0.532003 0.505531 0.3699018999999998
+  rotation 4.29466284495529e-13 7.793370364709582e-14 -0.9999999999999999 3.408003828131069e-06
   name "plastic crate(3)"
-  size 0.6 0.45 0.4
+  size 0.6 0.45 0.2
+  color 0 0 0
   mass 1
 }
+Table {
+  translation 0.04 0.46 0.03
+  name "table(2)"
+  size 1.8 0.6 0.34
+}
 PlasticCrate {
-  translation -1.179069999999998 -1.0700000000000005 -9.80999999999621e-05
-  rotation -3.384634338184906e-12 -1.6807658519469725e-12 1 3.0165680662401777e-07
+  translation -0.149503 0.502811 0.3699018999999998
+  rotation -2.5195469267520436e-17 -1.0609230810842653e-17 -1 0.02469521127551033
   name "plastic crate(4)"
-  size 0.6 0.45 0.4
+  size 0.6 0.45 0.2
+  color 1 1 1
   mass 1
 }
 Solid {
-  translation 5.44682451205283 -1.3099945127433459 0.6990941233283179
-  rotation 0.016300636307903536 0.9998671357069104 1.3755597489775734e-05 -3.141339570324644
+  translation 0.8274477893012878 -0.8501095077721063 0.6998487348580433
+  rotation -0.3047399088070793 0.9524310023685418 -0.002962044481049861 8.24731605155677e-05
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -573,13 +329,16 @@ Solid {
       }
     }
   ]
-  boundingObject USE box
+  name "solid(8)"
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
-  translation 5.137034521576889 -1.29975451656731 0.6991720838972394
-  rotation 0.016300636393604215 0.9998671357055132 1.3755597479024277e-05 -3.141339570324641
+  translation 6.630421416323408 -0.8734869705699819 0.6993970945794407
+  rotation -0.004869381439566477 0.01508342245159294 -0.9998743818558122 0.0052033576871712275
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -596,10 +355,13 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Solid {
-  translation 6.126914490818512 -1.3122245043314198 0.6989236100194585
-  rotation 0.016300636121467354 0.9998671357099497 1.375559751344807e-05 -3.1413395703246487
+  translation 1.553413312574817 -0.8411495052640889 0.6997919372575362
+  rotation -0.30474063542122787 0.9524334135500498 -0.0019333588560129004 8.24729529429319e-05
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -616,10 +378,13 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
-  translation 6.3581270295181795 -1.3202986556792458 0.6988654104100875
-  rotation 0.016303625068326808 0.9998670869772769 1.3755219236945648e-05 -3.141339570242409
+  translation 4.03548218844666 -0.8677522192039301 0.6995991740649017
+  rotation 2.6671928669014524e-05 5.1955951626482727e-05 0.9999999982945937 1.567884584408547
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -636,10 +401,13 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Solid {
-  translation 4.537374540512622 -1.280214524025775 0.6993229832073838
-  rotation 0.016300636559127953 0.9998671357028147 1.3755597458120976e-05 -3.1413395703246367
+  translation 3.245497513561147 -0.8614173943009621 0.6996605792641682
+  rotation -0.3044774816915954 0.951616829347676 0.041459296243671104 8.254377066275411e-05
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -656,10 +424,13 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
-  translation 4.206884551013866 -1.2895145281240634 0.6994055183277144
-  rotation 0.016300636648288288 0.999867135701361 1.3755597446710136e-05 -3.141339570324634
+  translation 5.701351564602146 -0.8366894891970404 0.6994685790210615
+  rotation -0.3047381383943805 0.9524264590106812 0.004301997710667347 8.247356249238329e-05
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -676,10 +447,13 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Solid {
-  translation 3.8068445632651704 -1.2864045330467446 0.6995058734679418
-  rotation 0.01630063675754874 0.9998671356995799 1.37555974329522e-05 -3.1413395703246314
+  translation 4.837525722257497 -0.8425382084493912 0.6995360424345021
+  rotation 0.9999970226118033 -0.002439923650372385 -3.9244221222137626e-05 3.1415673291547788
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -696,10 +470,13 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
-  translation 5.787244501395223 -1.3011545085392522 0.6990090851265744
-  rotation 0.016300636215589106 0.9998671357084152 1.3755597501646521e-05 -3.141339570324646
+  translation 2.4197265565999677 -0.8381815025123346 0.6997243518343919
+  rotation -0.3047410775904553 0.9524349606406235 -0.0007220654415714187 8.247282041125323e-05
   children [
     DEF box Shape {
       appearance PBRAppearance {
@@ -716,4 +493,186 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
+}
+Robot {
+  translation 2.25883 1.53899 0.309704
+  rotation -0.0028609169499051994 -0.004237651153712888 0.9999869286480224 -3.1397725504696923
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -8.946932187825496e-05
+        anchor 0.16 0.0839758 -0.247
+      }
+      device [
+        RotationalMotor {
+          name "wheel3"
+        }
+      ]
+      endPoint DEF WHEEL_3 Solid {
+        translation 0.16 0.0839758 -0.247
+        rotation 0.577333716730105 -0.5773833726315514 -0.577333716783645 2.0943436527531496
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.05
+            }
+          }
+        ]
+        name "solid(1)"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.610952781230026e-05
+        anchor -0.16 0.0839758 -0.247
+      }
+      device [
+        RotationalMotor {
+          name "wheel4"
+        }
+      ]
+      endPoint DEF WHEEL_4 Solid {
+        translation -0.16 0.0839758 -0.247
+        rotation 0.5773439864577796 -0.5773628344266081 -0.5773439864793884 2.094374459435379
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.05
+            }
+          }
+        ]
+        name "solid(2)"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.7758864269854175
+        anchor 0.16 -0.0660242 -0.247
+      }
+      device [
+        RotationalMotor {
+          name "wheel2"
+        }
+      ]
+      endPoint DEF WHEEL_2 Solid {
+        translation 0.16 -0.0660242 -0.247
+        rotation -0.11275758282603061 0.9894771389741839 -0.09066818054143547 1.612108459298182
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.05
+            }
+          }
+        ]
+        name "solid(3)"
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.7759683357081881
+        anchor -0.16 -0.0660242 -0.247
+      }
+      device [
+        RotationalMotor {
+          name "wheel1"
+        }
+      ]
+      endPoint DEF WHEEL_1 Solid {
+        translation -0.16 -0.0660242 -0.247
+        rotation -0.10187280741508846 -0.9895676291711478 0.10187167617135785 1.581282374316689
+        children [
+          DEF WHEEL Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.03
+              radius 0.05
+            }
+          }
+        ]
+        boundingObject USE WHEEL
+        physics Physics {
+        }
+      }
+    }
+    DEF base Shape {
+      appearance PBRAppearance {
+        baseColor 0.419608 0.419608 0.419608
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.3 0.2 0.4888
+      }
+    }
+    UR3e {
+      translation 0.00296 -0.00062 0.23
+      rotation 0 1 0 0
+      controller "repositor_controller_scara"
+      controllerArgs [
+        "3"
+      ]
+      selfCollision FALSE
+      toolSlot [
+        Camera {
+          translation 7.34642e-08 0.08 0
+          rotation 0 0 1 1.5708
+          name "color_sensor"
+          width 256
+          height 256
+          recognition Recognition {
+          }
+        }
+        Robotiq3fGripper {
+        }
+      ]
+      staticBase FALSE
+    }
+    DistanceSensor {
+      translation 0.25 0 0.05
+      rotation 0 0 1 3.14159
+      name "ds_base"
+      lookupTable [
+        0 1000 0
+        0.5 0 0
+      ]
+    }
+  ]
+  boundingObject USE base
+  physics Physics {
+  }
+  controller "four_wheeled_collision_avoidance"
 }
