@@ -25,6 +25,7 @@ EXTERNPROTO "../protos/Robotiq3fGripper.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/universal_robots/protos/UR5e.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/conveyors/protos/ConveyorBelt.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/factory/containers/protos/PlasticCrate.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/universal_robots/protos/UR10e.proto"
 
 WorldInfo {
   info [
@@ -46,8 +47,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.008118321216202607 0.9997463305783029 -0.021008744747105616 0.7376706150297373
-  position -2.655930413332559 0.4259171292365587 3.3780929370506905
+  orientation 0.3490686184627488 -0.054442471263438645 -0.9355143595515986 3.2841061103476563
+  position 6.080292487488622 -0.7453660853870929 5.821776846301436
   exposure 1.7
 }
 TexturedBackground {
@@ -211,6 +212,13 @@ SolidBox {
   }
 }
 SolidBox {
+  translation -0.135 1.4077 0.305
+  name "box(2)"
+  size 1.5 0.4 0.61
+  appearance GalvanizedMetal {
+  }
+}
+SolidBox {
   translation 1.77 -2.28 0.375
   rotation 0 0 1 3.1415919999999997
   name "box(4)"
@@ -233,8 +241,6 @@ SolidBox {
   }
 }
 UR5e {
-  hidden rotation_11 0 0 -1 0.5199999997956647
-  hidden rotation_15 0 0 -1 0.5199999997957218
   translation 0 -0.05 0.61
   rotation 0 0 1 -1.570795613280012
   controller "ure_controller_scara"
@@ -254,6 +260,24 @@ UR5e {
     DistanceSensor {
       translation 0 0.1 0
       rotation 0 0 1 1.570796
+    }
+  ]
+}
+UR10e {
+  translation 0 1.4 0.62
+  rotation 0 0 1 3.14159
+  controller "repositor_controller_scara"
+  toolSlot [
+    Camera {
+      translation 1.8366e-07 0.08 0
+      rotation 0 0 1 1.5708
+      name "color_sensor"
+      width 256
+      height 256
+      recognition Recognition {
+      }
+    }
+    Robotiq3fGripper {
     }
   ]
 }
@@ -305,9 +329,12 @@ Solid {
       }
     }
   ]
-  boundingObject USE box
+  name "solid(8)"
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
   translation 6.630421416323408 -0.8734869705699819 0.6993970945794407
@@ -328,6 +355,9 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Solid {
   translation 1.553413312574817 -0.8411495052640889 0.6997919372575362
@@ -348,6 +378,9 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
   translation 4.03548218844666 -0.8677522192039301 0.6995991740649017
@@ -368,6 +401,9 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Solid {
   translation 3.245497513561147 -0.8614173943009621 0.6996605792641682
@@ -388,6 +424,9 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
   translation 5.701351564602146 -0.8366894891970404 0.6994685790210615
@@ -408,6 +447,9 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Solid {
   translation 4.837525722257497 -0.8425382084493912 0.6995360424345021
@@ -428,6 +470,9 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    1 0 1
+  ]
 }
 Solid {
   translation 2.4197265565999677 -0.8381815025123346 0.6997243518343919
@@ -448,9 +493,12 @@ Solid {
   boundingObject USE box
   physics Physics {
   }
+  recognitionColors [
+    0 1 1
+  ]
 }
 Robot {
-  translation 0.178841 1.53514 0.297777
+  translation 2.25883 1.53899 0.309704
   rotation -0.0028609169499051994 -0.004237651153712888 0.9999869286480224 -3.1397725504696923
   children [
     HingeJoint {
@@ -610,7 +658,6 @@ Robot {
         }
         Robotiq3fGripper {
         }
-
       ]
       staticBase FALSE
     }

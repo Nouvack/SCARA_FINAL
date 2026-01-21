@@ -10,8 +10,7 @@ def to_float(s: str, default: float) -> float:
 robot = Robot()
 TIME_STEP = int(robot.getBasicTimeStep())
 
-# Argumentos pasados por Webots (controllerArgs):
-# python.exe -u conveyor_belt.py <speed> <timer>
+
 args = sys.argv[1:]
 
 if len(args) != 2:

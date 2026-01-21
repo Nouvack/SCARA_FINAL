@@ -8,23 +8,20 @@ WAITING, GRASPING, ROTATING, RELEASING, ROTATING_BACK = range(5)
 robot = Robot()
 
 # Margen para no pedir posiciones exactamente en el límite
-EPS = 0.001  # Aumentado para evitar warnings de Webots
+EPS = 0.001  
 
 counter = 0
 state = WAITING
-detected_color = None  # 'white' o 'black'
+detected_color = None  
 
 # Posiciones para cada canasta
-# Canasta BLANCA (izquierda/detrás)
+
 white_basket_positions = [-1.2, -1.8, -1.3, 6 ]
-# Canasta NEGRA (derecha) - ajustar wrist_2 para rotar hacia la otra canasta
 black_basket_positions = [-2, -1.8, 0, 0]
 
 speed = 1.0
 
-# -----------------------
 # Devices: gripper + UR
-# -----------------------
 hand_motors = [
     robot.getDevice("finger_1_joint_1"),
     robot.getDevice("finger_2_joint_1"),
@@ -45,9 +42,7 @@ for m in ur_motors:
         raise RuntimeError("Falta un motor del UR: shoulder_lift_joint / elbow_joint / wrist_1_joint / wrist_2_joint")
     m.setVelocity(speed)
 
-# -----------------------
 # Sensors
-# -----------------------
 distance_sensor = robot.getDevice("distance sensor")
 if distance_sensor is None:
     raise RuntimeError('No se encontró el sensor "distance sensor".')
@@ -72,7 +67,6 @@ def clamp_with_eps(motor, pos):
     """Limita la posición al rango permitido del motor, dejando un margen EPS."""
     mn = motor.getMinPosition()
     mx = motor.getMaxPosition()
-    # Algunos motores pueden tener mx = inf, pero en grippers normalmente es finito
     if mx == float("inf"):
         return max(mn + EPS, pos)
     return max(mn + EPS, min(mx - EPS, pos))
@@ -133,9 +127,7 @@ def detect_box_color():
         return None
 
 
-# -----------------------
 # Main loop
-# -----------------------
 while robot.step(TIME_STEP) != -1:
     if warmup_steps > 0:
         warmup_steps -= 1
