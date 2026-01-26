@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="SCARA Clasificadora banner" />
+  <img src="banner.svg" alt="SCARA Clasificadora banner" />
 </p>
 
 Este proyecto parte del mundo de ejemplo ure.wbt de Universal Robots en Webots, el cual incluye un robot SCARA.
@@ -41,3 +41,4 @@ El objetivo principal es demostrar cómo, a partir de un ejemplo base, se puede 
 ---
 
 Proyecto orientado a la experimentación y aprendizaje en robótica y automatización dentro de entornos simulados.
+
