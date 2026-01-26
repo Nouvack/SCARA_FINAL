@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" width="600" height="120">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&amp;display=swap');
+
+      /* --- Colores y Estilos --- */
+      :root {
+        --bg-color: #0d1117; /* GitHub Dark Background */
+        --text-color: #58a6ff; /* GitHub Blue Text */
+        --robot-arm: #8b949e; /* Gris metálico */
+        --robot-joint: #f0883e; /* Naranja acento */
+        --object-color: #ff7b72; /* Rojo para el objeto */
+      }
+
+      .bg { fill: var(--bg-color); }
+      text {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 28px;
+        font-weight: 700;
+        fill: var(--text-color);
+        letter-spacing: -1px;
+      }
+
+      .arm-link { stroke: var(--robot-arm); stroke-width: 8; stroke-linecap: round; }
+      .joint { fill: var(--robot-joint); }
+      .gripper { stroke: var(--robot-arm); stroke-width: 4; }
+      .the-object { fill: var(--object-color); }
+
+      /* --- Animación --- */
+      /* El brazo entero rota desde la base */
+      .scara-mechanism {
+        animation: classify-swing 4s ease-in-out infinite;
+        transform-box: fill-box;
+        transform-origin: 20px 50%; /* Pivote en la base izquierda */
+      }
+
+      @keyframes classify-swing {
+        0%, 100% { transform: rotate(0deg); } /* Posición inicial (centro) */
+        50% { transform: rotate(-30deg); } /* Posición final (clasificado a la izquierda) */
+      }
+
+      /* El objeto desaparece brevemente al "volver" para reiniciar el ciclo */
+      .the-object-group {
+         animation: object-blink 4s ease-in-out infinite;
+      }
+      @keyframes object-blink {
+          0%, 45%, 100% { opacity: 1; }
+          50%, 95% { opacity: 0; } /* Desaparece al volver */
+      }
+
+    </style>
+  </defs>
+
+  <rect class="bg" width="100%" height="100%" rx="10" />
+
+  <g transform="translate(30, 60)">
+    
+    <text x="0" y="10" alignment-baseline="middle">SCARA CLASIFICADORA</text>
+
+    <g transform="translate(380, -20)"> <circle class="joint" cx="20" cy="20" r="12" />
+
+      <g class="scara-mechanism">
+        <line class="arm-link" x1="20" y1="20" x2="100" y2="20" />
+        <circle class="joint" cx="100" cy="20" r="8" />
+        <line class="arm-link" x1="100" y1="20" x2="150" y2="20" />
+        <line class="gripper" x1="150" y1="10" x2="150" y2="30" />
+        
+        <g class="the-object-group">
+             <rect class="the-object" x="142" y="32" width="16" height="16" rx="2" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

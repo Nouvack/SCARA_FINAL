@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.svg" alt="SCARA Clasificadora banner" />
+</p>
+
 Este proyecto parte del mundo de ejemplo ure.wbt de Universal Robots en Webots, el cual incluye un robot SCARA.
 
 En su versión original, el robot se encarga de apilar objetos iguales, específicamente latas.
